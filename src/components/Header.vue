@@ -1,7 +1,7 @@
 <template>
   <el-row>
     <el-col :span="24">
-    <div>Element</div>
+    <div class="title">面试题库</div>
     </el-col>
   </el-row>
 </template>
@@ -13,5 +13,7 @@
 </script>
 
 <style scoped>
-
+.title{
+  text-align: center;
+}
 </style>
