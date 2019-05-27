@@ -11,7 +11,14 @@
       </el-form-item>
 
       <el-form-item label="答案" prop="answer">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 6}" v-model="form.answer"></el-input>
+<!--        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 6}" v-model="form.answer"></el-input>-->
+        <quill-editor ref="myTextEditor"
+                v-model="form.answer"
+                :options="editorOption"
+                @blur="onEditorBlur($event)"
+                @focus="onEditorFocus($event)"
+                @ready="onEditorReady($event)">
+        </quill-editor>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -42,6 +49,16 @@
                     answer: [
                         { required: true, message: '请输入答案', trigger: 'blur' }
                     ],
+                },
+                editorOption:{
+                    theme: "snow",
+                    modules: {
+                        toolbar: [
+                            ['bold', {'header': 1}, {'header': 2}],
+                            [ {'list': 'ordered'}, {'list': 'bullet'}, 'code-block'],
+                            ['link', 'image', 'video']
+                        ]
+                    },
                 }
             }
         },
@@ -64,7 +81,22 @@
                 }).catch(err => {
                     console.log(err);
                 });
-            }
+            },
+            //编辑器失去焦点事件
+            onEditorBlur(){
+
+            },
+
+            //编辑器获得焦点事件
+            onEditorFocus(){
+
+            },
+
+            //编辑器内容改变事件
+            onEditorReady(){
+
+            },
+
         },
         mounted() {
             this.getAllCategory();
