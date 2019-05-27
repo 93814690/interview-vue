@@ -5,7 +5,7 @@
       <span>{{subject.title}}</span>
     </div>
     <div class="text item">
-      <span>{{subject.answer}}</span>
+      <span v-html="subject.answer"></span>
     </div>
     <el-divider content-position="center">结束了</el-divider>
     <div align="middle">
