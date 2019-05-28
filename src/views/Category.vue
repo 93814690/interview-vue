@@ -5,7 +5,6 @@
           :data="tableData"
           border
           stripe
-
       >
         <el-table-column
             type="index"
@@ -26,21 +25,20 @@
           </template>
         </el-table-column>
       </el-table>
-      <!--      <el-pagination-->
-      <!--          background-->
-      <!--          layout="prev, pager, next"-->
-      <!--          @current-change="handleCurrentChange" :current-page="currentPage"-->
-      <!--          :total="total">-->
-      <!--      </el-pagination>-->
 
       <el-divider content-position="left">添加类别</el-divider>
 
-      <el-form :inline="true" :model="category" class="demo-form-inline">
-        <el-form-item label="类别">
+      <el-form :inline="true" :model="category" ref="categoryForm" class="demo-form-inline">
+        <el-form-item label="类别"
+                      prop="name"
+                      :rules="[
+                      { required: true, message: '请输入类别', trigger: 'blur' }
+                      ]"
+        >
           <el-input v-model="category.name" placeholder="类别"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="addCategory">添加</el-button>
+          <el-button type="primary" @click="addCategory('categoryForm')">添加</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -50,37 +48,43 @@
 </template>
 
 <script>
-
-
     export default {
         name: "Category",
         data() {
             return {
                 tableData: [],
-                total: 0,
-                currentPage: 1,
-                pageSize: 10,
                 category: {
-                    id: '',
                     name: ''
                 }
             }
         },
         methods: {
-            addCategory() {
-
-                this.$api.addCategory(this.category).then(response => {
-                    console.log(response);
-                    this.getAllCategory();
-                }).catch(error => {
-                    console.log(error);
+            addCategory(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.$api.addCategory(this.category).then(response => {
+                            this.getAllCategory();
+                            // 重置表单
+                            this.$refs[formName].resetFields();
+                        }).catch(error => {
+                            let data = error.data;
+                            if (data.code === 400) {
+                                this.$message.error(data.msg);
+                            } else {
+                                this.$message.error("未知错误");
+                            }
+                        });
+                    } else {
+                        return false;
+                    }
                 });
+
             },
             getAllCategory() {
                 this.$api.getAllCategory().then(res => {
                     this.tableData = res.data;
                 }).catch(err => {
-                    console.log(err);
+                    this.$message.error("未知错误");
                 });
             }
         },
