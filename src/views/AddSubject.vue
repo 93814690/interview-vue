@@ -21,7 +21,7 @@
         </quill-editor>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+        <el-button type="primary" @click="onSubmit('form')">立即创建</el-button>
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
@@ -63,23 +63,34 @@
             }
         },
         methods: {
-            onSubmit() {
-                this.$api.addSubject(this.form).then(res => {
-                    this.$message({
-                        message: '添加成功',
-                        type: 'success'
-                    });
-                    // 重置表单
-                    this.$refs["form"].resetFields();
-                }).catch(err => {
-
-                })
+            onSubmit(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.$api.addSubject(this.form).then(res => {
+                            this.$message({
+                                message: '添加成功',
+                                type: 'success'
+                            });
+                            // 重置表单
+                            this.$refs[formName].resetFields();
+                        }).catch(err => {
+                            let data = err.data;
+                            if (data.code === 400) {
+                                this.$message.error(data.msg);
+                            } else {
+                                this.$message.error("未知错误");
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                });
             },
             getAllCategory() {
                 this.$api.getAllCategory().then(res => {
                     this.category = res.data;
                 }).catch(err => {
-                    console.log(err);
+                    this.$message.error("未知错误");
                 });
             },
             //编辑器失去焦点事件
