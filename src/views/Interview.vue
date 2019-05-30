@@ -2,7 +2,7 @@
 
   <el-card class="box-card">
     <div slot="header" align="middle">
-      <span>{{subject.title}}</span>
+      <span class="title">{{subject.title}}</span>
     </div>
     <div class="text item">
       <span v-html="subject.answer"></span>
@@ -53,7 +53,10 @@
 </script>
 
 <style scoped>
-
+  .title{
+    font-size: 1.2em;
+    font-weight: bolder;
+  }
   .box-card {
     width: 480px;
     margin: 50px 80px;
