@@ -4,12 +4,24 @@
     <div slot="header" align="middle">
       <span class="title">{{subject.title}}</span>
     </div>
-    <div class="text item">
-      <span v-html="subject.answer"></span>
+    <div align="middle">
+      <el-button round @click="showAnswer = !showAnswer" type="info" :loading="loading">
+        <span v-if="showAnswer">
+          隐藏答案
+        </span>
+        <span v-else>
+          查看答案
+        </span>
+      </el-button>
     </div>
+    <el-collapse-transition>
+      <div v-show="showAnswer" class="text item">
+        <span v-html="subject.answer"></span>
+      </div>
+    </el-collapse-transition>
     <el-divider content-position="center">结束了</el-divider>
     <div align="middle">
-      <el-button @click="encore" type="primary" :loading="loading">再来一题</el-button>
+      <el-button round @click="encore" type="success" :loading="loading">再来一题</el-button>
     </div>
   </el-card>
 
@@ -21,6 +33,7 @@
         data() {
             return {
                 loading: false,
+                showAnswer: false,
                 subject: {
                     id: '',
                     category: '',
@@ -32,11 +45,9 @@
         methods: {
             getOne() {
                 this.$api.getSubjectByRandom().then(response => {
-                    console.log(response.data);
                     this.subject = response.data;
                 }).catch(error => {
                     // eslint-disable-next-line no-console
-                    console.log(error);
                     console.log(error.data);
                 })
             },
@@ -44,6 +55,7 @@
                 this.loading = true;
                 this.getOne();
                 this.loading = false;
+                this.showAnswer = false;
             }
         },
         mounted() {
@@ -53,10 +65,11 @@
 </script>
 
 <style scoped>
-  .title{
+  .title {
     font-size: 1.2em;
     font-weight: bolder;
   }
+
   .box-card {
     width: 480px;
     margin: 50px 80px;
