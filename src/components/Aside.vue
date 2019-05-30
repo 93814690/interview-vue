@@ -2,29 +2,21 @@
   <el-row class="tac">
     <el-col :span="24">
       <el-menu
-          default-active="1"
+          default-active="/"
           unique-opened
           router
           class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b">
-
         <el-menu-item index="/">
           <i class="el-icon-menu"></i>
           <span slot="title">随机题目</span>
         </el-menu-item>
-        <el-submenu index="2">
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>所有题目</span>
-          </template>
-          <el-menu-item-group class="over-hide" v-for="item in submenu" :key="item.name">
-            <el-menu-item index="home">{{item.name}}</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
+        <el-menu-item index="/subject" disabled="">
+          <i class="el-icon-menu"></i>
+          <span slot="title">所有题目</span>
+        </el-menu-item>
         <el-menu-item index="/category">
           <i class="el-icon-location"></i>
           <span slot="title">类别管理</span>
