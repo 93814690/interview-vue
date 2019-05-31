@@ -1,11 +1,19 @@
 import axios from './http';
 
-const postHttp = (url, params) => {
+const http = (url, method, params) => {
     return axios({
         url: url,
-        method: 'post',
+        method: method,
         params
-    })
+    });
+};
+
+const postHttp = (url, params) => {
+    return http(url, 'post', params);
+};
+
+const getHttp = (url, params) => {
+    return http(url, 'get', params);
 };
 
 export const getAllCategory = params => {
@@ -22,8 +30,8 @@ export const addCategory = params => {
 };
 
 export const getSubjectByRandom = params => {
-    return postHttp(
-        "/getOne",
+    return getHttp(
+        "/sub/getOneByRandom",
         params
     )
 };
