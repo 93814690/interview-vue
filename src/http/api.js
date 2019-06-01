@@ -36,6 +36,13 @@ export const getSubjectByRandom = params => {
     )
 };
 
+export const getSubjectByCategory = params => {
+    return getHttp(
+        "/sub/getByCategory",
+        params
+    )
+};
+
 export const addSubject = params => {
     return postHttp(
         "/sub/add",
@@ -47,5 +54,6 @@ export default{
     getAllCategory,
     addCategory,
     getSubjectByRandom,
+    getSubjectByCategory,
     addSubject
 }

@@ -13,7 +13,7 @@
           <i class="el-icon-menu"></i>
           <span slot="title">随机题目</span>
         </el-menu-item>
-        <el-menu-item index="/subject" disabled="">
+        <el-menu-item index="/subject" >
           <i class="el-icon-menu"></i>
           <span slot="title">所有题目</span>
         </el-menu-item>

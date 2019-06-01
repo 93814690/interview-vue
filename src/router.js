@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Interview from "./views/Interview";
 import Category from "./views/Category";
 import AddSubject from "./views/AddSubject";
+import Subject from "./views/Subject";
 
 Vue.use(Router);
 
@@ -12,6 +13,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Interview
+    },
+    {
+      path: '/subject',
+      name: 'subject',
+      component: Subject
     },
     {
       path: '/category',
