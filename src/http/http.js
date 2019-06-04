@@ -5,7 +5,7 @@ import {Message} from 'element-ui'
 export default function $axios(options) {
     return new Promise((resolve, reject) => {
         const instance = axios.create({
-                baseURL: "http://localhost:8081",
+                baseURL: "http://localhost:8081/api",
                 timeout: 15 * 1000
             }
         );
